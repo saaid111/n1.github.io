@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>NFC Tag Reader</title>
+</head>
+<body>
+  <h1>NFC Tag Reader</h1>
+  <p id="uid">Waiting for NFC tag...</p>
+
+  <script>
+    if ("NDEFReader" in window) {
+      const reader = new NDEFReader();
+
+      reader.addEventListener("reading", ({ serialNumber }) => {
+        document.getElementById("uid").textContent = `NFC tag UID: ${serialNumber}`;
+      });
+
+      reader.scan({ ignoreRead: true })
+        .then(() => console.log("Scan started successfully."))
+        .catch(error => console.error(`Error: ${error}`));
+    } else {
+      console.log("Web NFC not supported");
+    }
+  </script>
+</body>
+</html>
